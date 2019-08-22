@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test;
 
@@ -10,19 +10,19 @@ use PHPUnit\Framework\TestCase;
 
 class InMemoryListenerTest extends TestCase
 {
-    public function testExampleJson(): void
+    public function testExampleJson()
     {
         $testfile = __DIR__.'/data/example.json';
         $this->assertParsesCorrectly($testfile);
     }
 
-    public function testGeoJson(): void
+    public function testGeoJson()
     {
         $testfile = __DIR__.'/data/example.geojson';
         $this->assertParsesCorrectly($testfile);
     }
 
-    private function assertParsesCorrectly($testfile): void
+    private function assertParsesCorrectly($testfile)
     {
         $listener = new InMemoryListener();
         $stream = fopen($testfile, 'rb');

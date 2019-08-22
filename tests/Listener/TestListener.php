@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test\Listener;
 
@@ -16,54 +16,54 @@ class TestListener implements ListenerInterface, PositionAwareInterface
     protected $currentLine;
     protected $currentChar;
 
-    public function setFilePosition(int $line, int $char): void
+    public function setFilePosition(int $line, int $char)
     {
         $this->currentLine = $line;
         $this->currentChar = $char;
     }
 
-    public function startDocument(): void
+    public function startDocument()
     {
         $this->order[] = __FUNCTION__;
     }
 
-    public function endDocument(): void
+    public function endDocument()
     {
         $this->order[] = __FUNCTION__;
     }
 
-    public function startObject(): void
+    public function startObject()
     {
         $this->order[] = __FUNCTION__;
     }
 
-    public function endObject(): void
+    public function endObject()
     {
         $this->order[] = __FUNCTION__;
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         $this->order[] = __FUNCTION__;
     }
 
-    public function endArray(): void
+    public function endArray()
     {
         $this->order[] = __FUNCTION__;
     }
 
-    public function key(string $key): void
+    public function key(string $key)
     {
         $this->order[] = __FUNCTION__.' = '.self::stringify($key);
     }
 
-    public function value($value): void
+    public function value($value)
     {
         $this->order[] = __FUNCTION__.' = '.self::stringify($value);
         $this->positions[] = ['value' => $value, 'line' => $this->currentLine, 'char' => $this->currentChar];
     }
 
-    public function whitespace(string $whitespace): void
+    public function whitespace(string $whitespace)
     {
     }
 

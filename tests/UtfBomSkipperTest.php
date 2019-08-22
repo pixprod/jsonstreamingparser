@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test;
 
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class UtfBomSkipperTest extends TestCase
 {
-    public function testExample(): void
+    public function testExample()
     {
         $listener = new IdleListener();
         $stream = fopen(__DIR__.'/data/utf8bom.json', 'rb');

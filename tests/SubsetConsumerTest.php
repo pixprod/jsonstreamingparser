@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test;
 
@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class SubsetConsumerTest extends TestCase
 {
-    public function testProposesAJsonSubsetToConsume(): void
+    public function testProposesAJsonSubsetToConsume()
     {
         $listener = new Listener\DatesRangeConsumer();
         $parser = new Parser(fopen(__DIR__.'/data/dateRanges.json', 'rb'), $listener);
@@ -37,7 +37,7 @@ class SubsetConsumerTest extends TestCase
      *
      * @param string $fileToProcess
      */
-    public function testCollectsStructureCorrectly($fileToProcess): void
+    public function testCollectsStructureCorrectly($fileToProcess)
     {
         $listener = new Listener\IdealConsumer();
         $parser = new Parser(fopen($fileToProcess, 'rb'), $listener);

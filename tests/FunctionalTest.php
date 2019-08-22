@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test;
 
@@ -18,12 +18,12 @@ class FunctionalTest extends TestCase
      */
     private $listener;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->listener = new TestListener();
     }
 
-    public function testTraverseOrder(): void
+    public function testTraverseOrder()
     {
         $parser = new Parser(fopen(__DIR__.'/data/example.json', 'rb'), $this->listener);
         $parser->parse();
@@ -76,7 +76,7 @@ class FunctionalTest extends TestCase
         );
     }
 
-    public function testListenerGetsNotifiedAboutPositionInFileOfDataRead(): void
+    public function testListenerGetsNotifiedAboutPositionInFileOfDataRead()
     {
         $parser = new Parser(fopen(__DIR__.'/data/dateRanges.json', 'rb'), $this->listener);
         $parser->parse();
@@ -94,7 +94,7 @@ class FunctionalTest extends TestCase
         );
     }
 
-    public function testCountsLongLinesCorrectly(): void
+    public function testCountsLongLinesCorrectly()
     {
         $value = str_repeat('!', 10000);
         $longStream = self::getMemoryStream(<<<JSON
@@ -119,7 +119,7 @@ JSON
         );
     }
 
-    public function testThrowsParingError(): void
+    public function testThrowsParingError()
     {
         $parser = new Parser(self::getMemoryStream('{ invalid json }'), $this->listener);
 
@@ -128,7 +128,7 @@ JSON
         $parser->parse();
     }
 
-    public function testUnicodeSurrogatePair(): void
+    public function testUnicodeSurrogatePair()
     {
         $parser = new Parser(self::getMemoryStream('["Treble clef: \\uD834\\uDD1E!"]'), $this->listener);
         $parser->parse();
@@ -145,7 +145,7 @@ JSON
         );
     }
 
-    public function testMalformedUnicodeLowSurrogate(): void
+    public function testMalformedUnicodeLowSurrogate()
     {
         $parser = new Parser(self::getMemoryStream('["\\uD834abc"]'), $this->listener);
 
@@ -154,7 +154,7 @@ JSON
         $parser->parse();
     }
 
-    public function testInvalidUnicodeHighSurrogate(): void
+    public function testInvalidUnicodeHighSurrogate()
     {
         $parser = new Parser(self::getMemoryStream('["\\uAAAA\\uDD1E"]'), $this->listener);
 
@@ -163,7 +163,7 @@ JSON
         $parser->parse();
     }
 
-    public function testInvalidUnicodeLowSurrogate(): void
+    public function testInvalidUnicodeLowSurrogate()
     {
         $parser = new Parser(self::getMemoryStream('["\\uD834\\uAAAA"]'), $this->listener);
 
@@ -172,7 +172,7 @@ JSON
         $parser->parse();
     }
 
-    public function testFilePositionIsCalledIfDefined(): void
+    public function testFilePositionIsCalledIfDefined()
     {
         $filePositionListener = new FilePositionListener();
 
@@ -182,7 +182,7 @@ JSON
         $this->assertTrue($filePositionListener->called);
     }
 
-    public function testStopEarly(): void
+    public function testStopEarly()
     {
         $listener = new StopEarlyListener();
         $parser = new Parser(self::getMemoryStream('["abc","def"]'), $listener);
@@ -201,7 +201,7 @@ JSON
     /**
      * @dataProvider providerTestVariousErrors
      */
-    public function testVariousErrors(string $data, string $errorMessage): void
+    public function testVariousErrors(string $data, string $errorMessage)
     {
         $parser = new Parser(self::getMemoryStream($data), $this->listener);
 

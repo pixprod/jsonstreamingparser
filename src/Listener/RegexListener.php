@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Listener;
 
@@ -127,7 +127,7 @@ class RegexListener implements ListenerInterface  {
      * Sent as [regex => closure()] format.
      * @param array $dataMatch
      */
-    public function setMatch (array $dataMatch): void   {
+    public function setMatch (array $dataMatch)   {
         $this->dataMatch = $dataMatch;
     }
     
@@ -137,7 +137,7 @@ class RegexListener implements ListenerInterface  {
      * @see \JsonStreamingParser\Listener\ListenerInterface::startObject()
      * @param int $index - set to 0 for arrays (used for index number).
      */
-    public function startObject( $index = RegexListener::OBJECT ): void   {
+    public function startObject( $index = RegexListener::OBJECT )   {
         // Does the hierarchy need updating?
         if ( $index != RegexListener::OBJECT || $this->pathLength != 0 || !empty($this->label))    {
             $this->path[] = $this->label ?? "";
@@ -165,7 +165,7 @@ class RegexListener implements ListenerInterface  {
         $this->objectEncountered = ($index === RegexListener::OBJECT);
     }
 
-    public function endObject(): void    {
+    public function endObject()    {
         $obj = array_pop($this->stack);
         if ( $this->pathLength > 0 )    {
             $this->label = array_pop($this->path);
@@ -183,25 +183,25 @@ class RegexListener implements ListenerInterface  {
         }
     }
     
-    public function startArray(): void    {
+    public function startArray()    {
         $this->startObject( RegexListener::ARRAY );
     }
 
-    public function endArray(): void    {
+    public function endArray()    {
         $this->endObject();
     }
 
-    public function whitespace(string $whitespace): void    {}
+    public function whitespace(string $whitespace)    {}
 
-    public function startDocument(): void    {
+    public function startDocument()    {
         $this->complete = false;
     }
 
-    public function endDocument(): void    {
+    public function endDocument()    {
         $this->complete = true;
     }
 
-    public function value($value): void    {
+    public function value($value)    {
         $obj = array_pop( $this->stack );
         $path = $this->getPath();
            
@@ -237,7 +237,7 @@ class RegexListener implements ListenerInterface  {
         $this->objectEncountered = false;
     }
 
-    public function key(string $key): void   {
+    public function key(string $key)   {
         $this->label = $key;
     }    
     

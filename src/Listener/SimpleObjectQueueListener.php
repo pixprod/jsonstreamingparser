@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Listener;
 
@@ -53,22 +53,22 @@ class SimpleObjectQueueListener implements ListenerInterface
         $this->callback = $callback;
     }
 
-    public function startDocument(): void
+    public function startDocument()
     {
         $this->reset();
     }
 
-    public function endDocument(): void
+    public function endDocument()
     {
         $this->reset();
     }
 
-    public function startObject(): void
+    public function startObject()
     {
         $this->reset();
     }
 
-    public function endObject(): void
+    public function endObject()
     {
         /*
          * Return the currently compiled object to the callback.
@@ -82,34 +82,34 @@ class SimpleObjectQueueListener implements ListenerInterface
         }
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         /* we support an array of objects, not nested arrays. leave this alone */
     }
 
-    public function endArray(): void
+    public function endArray()
     {
         /* no need to support arrays */
     }
 
-    public function key(string $key): void
+    public function key(string $key)
     {
         $this->currentKey = $key;
     }
 
-    public function value($value): void
+    public function value($value)
     {
         $this->currentObject[$this->currentKey] = $value;
     }
 
-    public function whitespace(string $whitespace): void
+    public function whitespace(string $whitespace)
     {
     }
 
     /**
      * Reset all the values to default.
      */
-    protected function reset(): void
+    protected function reset()
     {
         $this->currentObject = [];
         $this->currentKey = null;

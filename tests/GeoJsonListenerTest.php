@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test;
 
@@ -10,14 +10,14 @@ use PHPUnit\Framework\TestCase;
 
 class GeoJsonListenerTest extends TestCase
 {
-    public function testExample(): void
+    public function testExample()
     {
         $filePath = __DIR__.'/data/example.geojson';
 
         $coordsCount = 0;
         $figures = [];
 
-        $listener = new GeoJsonListener(function ($item) use (&$coordsCount, &$figures): void {
+        $listener = new GeoJsonListener(function ($item) use (&$coordsCount, &$figures) {
             $coordsCount += \count($item['geometry']['coordinates']);
             $figures[] = $item['geometry']['type'];
         });

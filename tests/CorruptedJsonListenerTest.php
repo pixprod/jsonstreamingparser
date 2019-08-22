@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test;
 
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class CorruptedJsonListenerTest extends TestCase
 {
-    public function testExample(): void
+    public function testExample()
     {
         $filePath = __DIR__.'/data/example.corrupted.json';
 

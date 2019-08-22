@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Listener;
 
@@ -13,22 +13,22 @@ abstract class SubsetConsumerListener implements ListenerInterface
      */
     protected $key;
 
-    public function startDocument(): void
+    public function startDocument()
     {
         $this->keyValueStack = [];
     }
 
-    public function endDocument(): void
+    public function endDocument()
     {
     }
 
-    public function startObject(): void
+    public function startObject()
     {
         $this->keyValueStack[] = null === $this->key ? [[]] : [$this->key => []];
         $this->key = null;
     }
 
-    public function endObject(): void
+    public function endObject()
     {
         $keyValue = array_pop($this->keyValueStack);
         $obj = reset($keyValue);
@@ -40,22 +40,22 @@ abstract class SubsetConsumerListener implements ListenerInterface
         }
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         $this->startObject();
     }
 
-    public function endArray(): void
+    public function endArray()
     {
         $this->endObject();
     }
 
-    public function key(string $key): void
+    public function key(string $key)
     {
         $this->key = $key;
     }
 
-    public function value($value): void
+    public function value($value)
     {
         $keyValue = array_pop($this->keyValueStack);
         $objKey = key($keyValue);
@@ -68,7 +68,7 @@ abstract class SubsetConsumerListener implements ListenerInterface
         $this->keyValueStack[] = $keyValue;
     }
 
-    public function whitespace(string $whitespace): void
+    public function whitespace(string $whitespace)
     {
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Listener;
 
@@ -27,7 +27,7 @@ class CorruptedJsonListener implements ListenerInterface
         return $this->json;
     }
 
-    public function startDocument(): void
+    public function startDocument()
     {
         $this->stack = [];
         $this->level = 0;
@@ -36,27 +36,27 @@ class CorruptedJsonListener implements ListenerInterface
         $this->keys = [];
     }
 
-    public function endDocument(): void
+    public function endDocument()
     {
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         $this->startObject();
     }
 
-    public function startObject(): void
+    public function startObject()
     {
         ++$this->level;
         $this->stack[] = [];
     }
 
-    public function endArray(): void
+    public function endArray()
     {
         $this->endObject();
     }
 
-    public function endObject(): void
+    public function endObject()
     {
         --$this->level;
         $obj = array_pop($this->stack);
@@ -71,7 +71,7 @@ class CorruptedJsonListener implements ListenerInterface
     /**
      * Value may be a string, integer, boolean, null.
      */
-    public function value($value): void
+    public function value($value)
     {
         $obj = array_pop($this->stack);
         if (!empty($this->keys[$this->level])) {
@@ -83,12 +83,12 @@ class CorruptedJsonListener implements ListenerInterface
         $this->stack[] = $obj;
     }
 
-    public function key(string $key): void
+    public function key(string $key)
     {
         $this->keys[$this->level] = $key;
     }
 
-    public function whitespace(string $whitespace): void
+    public function whitespace(string $whitespace)
     {
         // do nothing
     }
@@ -97,7 +97,7 @@ class CorruptedJsonListener implements ListenerInterface
      * Forcefully finish the document, end all objects and arrays
      * and set final object to the json property.
      */
-    public function forceEndDocument(): void
+    public function forceEndDocument()
     {
         if (empty($this->stack)) {
             return;

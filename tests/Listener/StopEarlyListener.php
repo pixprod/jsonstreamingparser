@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Test\Listener;
 
@@ -16,12 +16,12 @@ class StopEarlyListener extends TestListener
     /**
      * @param Parser $parser
      */
-    public function setParser($parser): void
+    public function setParser($parser)
     {
         $this->parser = $parser;
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         parent::startArray();
         $this->parser->stop();

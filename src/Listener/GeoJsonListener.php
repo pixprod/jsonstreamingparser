@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+# declare(strict_types=1);
 
 namespace JsonStreamingParser\Listener;
 
@@ -37,7 +37,7 @@ class GeoJsonListener implements ListenerInterface
         return $this->json;
     }
 
-    public function startDocument(): void
+    public function startDocument()
     {
         $this->stack = [];
         $this->level = 0;
@@ -46,12 +46,12 @@ class GeoJsonListener implements ListenerInterface
         $this->key = [];
     }
 
-    public function endDocument(): void
+    public function endDocument()
     {
         // w00t!
     }
 
-    public function startObject(): void
+    public function startObject()
     {
         ++$this->level;
         $this->stack[] = [];
@@ -62,7 +62,7 @@ class GeoJsonListener implements ListenerInterface
         }
     }
 
-    public function endObject(): void
+    public function endObject()
     {
         --$this->level;
         $obj = array_pop($this->stack);
@@ -78,17 +78,17 @@ class GeoJsonListener implements ListenerInterface
         }
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         $this->startObject();
     }
 
-    public function endArray(): void
+    public function endArray()
     {
         $this->endObject();
     }
 
-    public function key(string $key): void
+    public function key(string $key)
     {
         $this->key[$this->level] = $key;
     }
@@ -96,7 +96,7 @@ class GeoJsonListener implements ListenerInterface
     /**
      * Value may be a string, integer, boolean, null.
      */
-    public function value($value): void
+    public function value($value)
     {
         $obj = array_pop($this->stack);
         if (!empty($this->key[$this->level])) {
@@ -108,7 +108,7 @@ class GeoJsonListener implements ListenerInterface
         $this->stack[] = $obj;
     }
 
-    public function whitespace(string $whitespace): void
+    public function whitespace(string $whitespace)
     {
     }
 }
