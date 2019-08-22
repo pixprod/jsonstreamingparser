@@ -1,6 +1,6 @@
 {
-  "name": "salsify/json-streaming-parser",
-  "description": "A streaming parser for JSON in PHP.",
+  "name": "pipro/jsonstreamingparser",
+  "description": "A streaming parser for JSON in PHP 7.0.",
   "keywords": ["json", "parser", "streaming"],
   "homepage": "https://github.com/salsify/jsonstreamingparser",
   "type": "library",
@@ -26,7 +26,7 @@
     }
   ],
   "require": {
-    "php": "^7.1",
+    "php": "^7.0",
     "ext-ctype": "*",
     "ext-mbstring": "*"
   },
