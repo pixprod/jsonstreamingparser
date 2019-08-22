@@ -30,43 +30,43 @@ class InMemoryListener extends IdleListener
         return $this->result;
     }
 
-    public function startDocument(): void
+    public function startDocument()
     {
         $this->stack = [];
         $this->keys = [];
     }
 
-    public function startObject(): void
+    public function startObject()
     {
         $this->startComplexValue('object');
     }
 
-    public function endObject(): void
+    public function endObject()
     {
         $this->endComplexValue();
     }
 
-    public function startArray(): void
+    public function startArray()
     {
         $this->startComplexValue('array');
     }
 
-    public function endArray(): void
+    public function endArray()
     {
         $this->endComplexValue();
     }
 
-    public function key(string $key): void
+    public function key(string $key)
     {
         $this->keys[] = $key;
     }
 
-    public function value($value): void
+    public function value($value)
     {
         $this->insertValue($value);
     }
 
-    protected function startComplexValue($type): void
+    protected function startComplexValue($type)
     {
         // We keep a stack of complex values (i.e. arrays and objects) as we build them,
         // tagged with the type that they are so we know how to add new values.
@@ -74,7 +74,7 @@ class InMemoryListener extends IdleListener
         $this->stack[] = $currentItem;
     }
 
-    protected function endComplexValue(): void
+    protected function endComplexValue()
     {
         $obj = array_pop($this->stack);
 
@@ -90,7 +90,7 @@ class InMemoryListener extends IdleListener
 
     // Inserts the given value into the top value on the stack in the appropriate way,
     // based on whether that value is an array or an object.
-    protected function insertValue($value): void
+    protected function insertValue($value)
     {
         // Grab the top item from the stack that we're currently parsing.
         $currentItem = array_pop($this->stack);

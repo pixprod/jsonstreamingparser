@@ -128,7 +128,7 @@ class Parser
         $this->lineEnding = $lineEnding;
     }
 
-    public function parse(): void
+    public function parse()
     {
         $this->lineNumber = 1;
         $this->charNumber = 1;
@@ -166,12 +166,12 @@ class Parser
         }
     }
 
-    public function stop(): void
+    public function stop()
     {
         $this->stopParsing = true;
     }
 
-    private function consumeChar(string $char): void
+    private function consumeChar(string $char)
     {
         // see https://en.wikipedia.org/wiki/Byte_order_mark
         if ($this->charNumber < 5 && 1 === $this->lineNumber && $this->checkAndSkipUtfBom($char)) {
@@ -392,7 +392,7 @@ class Parser
     /**
      * @throws ParsingException
      */
-    private function startValue(string $c): void
+    private function startValue(string $c)
     {
         if ('[' === $c) {
             $this->startArray();
@@ -416,14 +416,14 @@ class Parser
         }
     }
 
-    private function startArray(): void
+    private function startArray()
     {
         $this->listener->startArray();
         $this->state = self::STATE_IN_ARRAY;
         $this->stack[] = self::STACK_ARRAY;
     }
 
-    private function endArray(): void
+    private function endArray()
     {
         $popped = array_pop($this->stack);
         if (self::STACK_ARRAY !== $popped) {
@@ -437,14 +437,14 @@ class Parser
         }
     }
 
-    private function startObject(): void
+    private function startObject()
     {
         $this->listener->startObject();
         $this->state = self::STATE_IN_OBJECT;
         $this->stack[] = self::STACK_OBJECT;
     }
 
-    private function endObject(): void
+    private function endObject()
     {
         $popped = array_pop($this->stack);
         if (self::STACK_OBJECT !== $popped) {
@@ -458,19 +458,19 @@ class Parser
         }
     }
 
-    private function startString(): void
+    private function startString()
     {
         $this->stack[] = self::STACK_STRING;
         $this->state = self::STATE_IN_STRING;
     }
 
-    private function startKey(): void
+    private function startKey()
     {
         $this->stack[] = self::STACK_KEY;
         $this->state = self::STATE_IN_STRING;
     }
 
-    private function endString(): void
+    private function endString()
     {
         $popped = array_pop($this->stack);
         if (self::STACK_KEY === $popped) {
@@ -488,7 +488,7 @@ class Parser
     /**
      * @throws ParsingException
      */
-    private function processEscapeCharacter(string $c): void
+    private function processEscapeCharacter(string $c)
     {
         if ('"' === $c) {
             $this->buffer .= '"';
@@ -520,7 +520,7 @@ class Parser
     /**
      * @throws ParsingException
      */
-    private function processUnicodeCharacter(string $char): void
+    private function processUnicodeCharacter(string $char)
     {
         if (!ParserHelper::isHexCharacter($char)) {
             $this->throwParseError(
@@ -553,7 +553,7 @@ class Parser
         }
     }
 
-    private function endUnicodeSurrogateInterstitial(): void
+    private function endUnicodeSurrogateInterstitial()
     {
         $unicodeEscape = $this->unicodeEscapeBuffer;
         if ('\\u' !== $unicodeEscape) {
@@ -563,7 +563,7 @@ class Parser
         $this->state = self::STATE_UNICODE;
     }
 
-    private function endUnicodeCharacter(int $codepoint): void
+    private function endUnicodeCharacter(int $codepoint)
     {
         $this->buffer .= ParserHelper::convertCodepointToCharacter($codepoint);
         $this->unicodeBuffer = [];
@@ -571,35 +571,35 @@ class Parser
         $this->state = self::STATE_IN_STRING;
     }
 
-    private function startNumber(string $c): void
+    private function startNumber(string $c)
     {
         $this->state = self::STATE_IN_NUMBER;
         $this->buffer .= $c;
     }
 
-    private function endNumber(): void
+    private function endNumber()
     {
         $this->listener->value(ParserHelper::convertToNumber($this->buffer));
         $this->buffer = '';
         $this->state = self::STATE_AFTER_VALUE;
     }
 
-    private function endTrue(): void
+    private function endTrue()
     {
         $this->endSpecialValue(true, 'true');
     }
 
-    private function endFalse(): void
+    private function endFalse()
     {
         $this->endSpecialValue(false, 'false');
     }
 
-    private function endNull(): void
+    private function endNull()
     {
         $this->endSpecialValue(null, 'null');
     }
 
-    private function endSpecialValue($value, string $stringValue): void
+    private function endSpecialValue($value, string $stringValue)
     {
         if ($this->buffer === $stringValue) {
             $this->listener->value($value);
@@ -610,7 +610,7 @@ class Parser
         $this->state = self::STATE_AFTER_VALUE;
     }
 
-    private function endDocument(): void
+    private function endDocument()
     {
         $this->listener->endDocument();
         $this->state = self::STATE_END_DOCUMENT;
@@ -619,7 +619,7 @@ class Parser
     /**
      * @throws ParsingException
      */
-    private function throwParseError(string $message): void
+    private function throwParseError(string $message)
     {
         throw new ParsingException($this->lineNumber, $this->charNumber, $message);
     }
